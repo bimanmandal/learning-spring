@@ -4,10 +4,7 @@ import org.springframework.context.annotation.Bean;
 
 public class TestFile {
 
-  @Beanpublic int testbean(){
+  public static void testbean(){
 
-    sfsdf
-
-        
   }
 }
