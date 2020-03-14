@@ -6,9 +6,10 @@ import javax.persistence.*;
 @Table(name = "students")
 public class Student {
 
+    // it looks for column name except for primary key and _
     @Id
-    private long rollNo;
-    private String name;
+    private long rollNo;  // column-name in table is roll_no - underscore removed and next letter is capital. valid for primary key only.
+    private String name;  /// order need not be same as in table. column-names should match
     private int marks;
 
     public long getRollNo() {

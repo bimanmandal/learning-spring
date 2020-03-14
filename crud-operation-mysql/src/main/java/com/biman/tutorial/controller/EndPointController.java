@@ -1,54 +1,66 @@
 package com.biman.tutorial.controller;
 
-import com.biman.tutorial.controller.accessDataJPA.StudentRepository;
 import com.biman.tutorial.databaseObject.Student;
+import com.biman.tutorial.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Controller
 public class EndPointController {
 
-    @Autowired
-    StudentRepository studentRepository;
+  @Autowired
+  StudentService studentService;
 
-    @GetMapping("/list")
-    public ResponseEntity getAllStudents() {
-        List<Student> students = StreamSupport
-                .stream(studentRepository.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(students);
-    }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity updateStudent(@PathVariable long id, @RequestBody Student student){
-        Student studentFromRepository = studentRepository.findById(id).orElse(new Student());
-        studentFromRepository.setName(student.getName());
-        studentFromRepository.setMarks(student.getMarks());
-        studentFromRepository.setRollNo(id);
-        studentRepository.save(studentFromRepository);
+  @GetMapping("/list")
+  public ResponseEntity getAllStudents() {
+    List<Student> students = studentService.getAllStudents();
+    return ResponseEntity.ok(students);
+  }
 
-        return ResponseEntity.ok("Student data saved successfully!!");
-    }
+  @GetMapping("/list/{id}")
+  public ResponseEntity getStudent( @PathVariable long id) {
+    Student student = studentService.getStudent(id);
+    return ResponseEntity.ok(student);
+  }
 
-    @DeleteMapping("/delete/{rollNo}")
-    public ResponseEntity deleteStudent(@PathVariable long rollNo){
-        System.out.println(rollNo);
-        studentRepository.deleteByRollNo(rollNo);
-        return ResponseEntity.ok("Student deleted Successfully");
-    }
+  @PutMapping("/update/{id}")
+  public ResponseEntity updateStudent(@PathVariable long id, @RequestBody Student student) {
 
-    @PostMapping("/add")
-    public ResponseEntity saveStudent(@RequestBody Student student){
-        studentRepository.save(student);
+    return (studentService.updateStudent(id, student))
+        ? ResponseEntity.ok("Student updated successfully!!")
+        : ResponseEntity.badRequest().body("Student not updated");
+  }
 
-        return ResponseEntity.ok("Student saved successfully!!");
-    }
+  @DeleteMapping("/delete1/{rollNo}")
+  public ResponseEntity deleteStudent(@PathVariable long rollNo) {
+    studentService.deleteByRollNo(rollNo);
+    return ResponseEntity.ok("Student deleted Successfully");
+  }
+
+  @DeleteMapping("/delete2/{name}")
+  public ResponseEntity deleteStudentByName(@PathVariable String name) {
+    return (studentService.deleteByName(name))
+        ? ResponseEntity.ok("Student deleted Successfully")
+        : ResponseEntity.notFound().build();
+  }
+
+  @DeleteMapping("/delete3/{marks}")
+  public ResponseEntity deleteStudentByMarks(@PathVariable int marks) {
+    return (studentService.deleteByMarks(marks))
+        ? ResponseEntity.ok("Student deleted Successfully")
+        : ResponseEntity.notFound().build();
+  }
+
+  @PostMapping("/add")
+  public ResponseEntity saveStudent(@RequestBody Student student) {
+    studentService.addStudent(student);
+    return ResponseEntity.ok("Student saved successfully!!");
+  }
 
 
 }
