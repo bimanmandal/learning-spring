@@ -1,6 +1,6 @@
-package com.biman.tutorial.controller.accessDataJPA;
+package com.biman.tutorial.repositories;
 
-import com.biman.tutorial.databaseObject.Student;
+import com.biman.tutorial.dbos.Student;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;

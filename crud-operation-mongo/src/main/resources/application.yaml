@@ -1,0 +1,12 @@
+logging:
+  level:
+    root: ERROR
+server:
+  port: 9090
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate.auto-ddl: update
+  data:
+    mongodb:
+      uri: mongodb://root:root123@localhost:27017/test

@@ -1,6 +1,6 @@
 package com.biman.tutorial.controller;
 
-import com.biman.tutorial.databaseObject.Student;
+import com.biman.tutorial.dbos.Student;
 import com.biman.tutorial.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
