@@ -1,4 +1,4 @@
-package com.biman.tutorial.databaseObject;
+package com.biman.tutorial.dbos;
 
 import javax.persistence.*;
 

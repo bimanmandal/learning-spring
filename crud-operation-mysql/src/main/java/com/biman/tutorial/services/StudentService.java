@@ -1,10 +1,9 @@
 package com.biman.tutorial.services;
 
-import com.biman.tutorial.controller.accessDataJPA.StudentRepository;
-import com.biman.tutorial.databaseObject.Student;
+import com.biman.tutorial.repositories.StudentRepository;
+import com.biman.tutorial.dbos.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
